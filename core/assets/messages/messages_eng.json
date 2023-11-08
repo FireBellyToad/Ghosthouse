@@ -1,0 +1,25 @@
+{
+  "max_char_per_line": 19,
+  "max_lines": 13,
+  "messages": {
+    "boxes": {
+    },
+    "cutscenes": {
+    "menu": {
+      "menu.endgame": "THE END",
+      "menu.sure": "DELETE OLD\nGAME?",
+      "menu.continue": "CONTINUE?",
+      "YES": "YES",
+      "NO": "NO",
+      "BACK": "BACK",
+      "CREDITS": "CREDITS",
+      "EXIT_GAME": "EXIT GAME",
+      "LOAD_GAME": "LOAD GAME",
+      "NEW_GAME": "NEW GAME",
+      "PLAY_GAME": "PLAY GAME",
+      "GAME_OVER": "GAME OVER",
+      "CONTINUE": "CONTINUE",
+      "STORY": "STORY"
+    }
+  }
+}
