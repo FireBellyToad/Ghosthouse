@@ -45,7 +45,7 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
 
 
     private float mapStateTimeFromBehaviour(float stateTime) {
-        return stateTime * 0.75f;
+        return stateTime;
     }
 
     @Override

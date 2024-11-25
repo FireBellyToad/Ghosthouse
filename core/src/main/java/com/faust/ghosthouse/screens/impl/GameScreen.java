@@ -30,12 +30,13 @@ public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
 
         //Render before game logic to avoid desync
 
-//        cameraManager.applyAndUpdate();
-//        game.getBatch().setProjectionMatrix(cameraManager.getCamera().combined);
+        cameraManager.applyAndUpdate();
+        game.getBatch().setProjectionMatrix(cameraManager.getCamera().combined);
 
         game.getBatch().begin();
         cameraManager.renderBackground();
         game.getBatch().end();
+
         game.getBatch().begin();
         player.draw(game.getBatch(),delta);
         game.getBatch().end();

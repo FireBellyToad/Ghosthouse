@@ -25,6 +25,7 @@ public class GhostHouse extends Game {
         batch = new SpriteBatch();
         cameraManager = new CameraManager();
         gameScreen = new GameScreen(this);
+        setScreen(gameScreen);
     }
 
     @Override

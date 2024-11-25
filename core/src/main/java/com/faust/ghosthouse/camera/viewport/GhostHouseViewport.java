@@ -27,7 +27,7 @@ public class GhostHouseViewport extends ScalingViewport {
     public void update(int screenWidth, int screenHeight, boolean centerCamera) {
 
         //Use fillY logic, but scaling down to nearest integer
-        Vector2 scaled = new Vector2();
+        var scaled = new Vector2();
         float scale = MathUtils.round(screenHeight / getWorldHeight());
 
         scaled.x = getWorldWidth() * scale;
