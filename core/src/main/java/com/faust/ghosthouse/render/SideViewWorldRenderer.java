@@ -23,7 +23,7 @@ public class SideViewWorldRenderer implements WorldRenderer<Room> {
 
     private final SpriteBatch batch;
     private final CameraManager cameraManager;
-    private OrthogonalTiledMapRenderer tiledMapRenderer;
+    private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
     public SideViewWorldRenderer(SpriteBatch batch, CameraManager cameraManager, Room room) {
         Objects.requireNonNull(batch);

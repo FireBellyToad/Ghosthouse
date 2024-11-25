@@ -23,8 +23,9 @@ public class WorldManager {
     private static final float DEFAULT_TIME_STEP = 1 / 60f;
     private static final int DEFAULT_VELOCITY_ITERATIONS = 8;
     private static final int DEFAULT_POSITION_ITERATIONS = 4;
+    public static final int  FORCE_MODIFIER = 25;
 
-    private static final float EARTH_GRAVITY = -10f;
+    private static final float EARTH_GRAVITY = -10f * FORCE_MODIFIER;
 
     private final World world;
     private float accumulator;
@@ -115,7 +116,7 @@ public class WorldManager {
     public void insertEnemiesIntoWorld(List<AnimatedInstance> enemiesInstance) {
         Objects.requireNonNull(enemiesInstance);
 
-        enemiesInstance.forEach((e) -> this.insertIntoWorld(e, e.getStartX(), e.getStartY()));
+        enemiesInstance.forEach(e -> this.insertIntoWorld(e, e.getStartX(), e.getStartY()));
     }
 
     /**
@@ -126,7 +127,7 @@ public class WorldManager {
     public void insertWallsIntoWorld(List<WallArea> wallList) {
         Objects.requireNonNull(wallList);
 
-        wallList.forEach((w) -> w.createBody(this.world));
+        wallList.forEach(w -> w.createBody(this.world));
     }
 
     public World getWorld() {

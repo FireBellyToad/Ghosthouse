@@ -21,6 +21,11 @@ public abstract class GameInstance {
     public static final int POSITION_OFFSET = 16;
     public static final int POSITION_Y_OFFSET = 16;
 
+    private static final float EARTH_GRAVITY = -10f;
+
+    public static final float UNITS_PER_METRE = 128;
+
+
     // Flicker effect variables
     protected boolean mustFlicker = false;// flag that is true when the Instance must be hidden
     protected long startToFlickTime = 0;

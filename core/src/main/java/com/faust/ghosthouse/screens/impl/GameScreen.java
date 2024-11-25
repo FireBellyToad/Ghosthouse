@@ -15,7 +15,7 @@ public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
     private final SideViewWorldRenderer worldRenderer;
 
     private float stateTime = 0f;
-    private CameraManager cameraManager;
+    private final CameraManager cameraManager;
 
 
     public GameScreen(GhostHouse game) {
