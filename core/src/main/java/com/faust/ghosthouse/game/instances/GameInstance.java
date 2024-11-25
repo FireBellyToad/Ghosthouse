@@ -19,7 +19,7 @@ import java.util.Objects;
 public abstract class GameInstance {
 
     public static final int POSITION_OFFSET = 16;
-    public static final int POSITION_Y_OFFSET = 8;
+    public static final int POSITION_Y_OFFSET = 16;
 
     // Flicker effect variables
     protected boolean mustFlicker = false;// flag that is true when the Instance must be hidden
@@ -53,9 +53,9 @@ public abstract class GameInstance {
      * Disposing internal resources
      */
     public void dispose() {
-        //TODO uncomment when box2d is added
-//        this.body.getFixtureList().forEach(f ->
-//                this.body.destroyFixture(f));
+
+        this.body.getFixtureList().forEach(f ->
+                this.body.destroyFixture(f));
     }
 
     public float getStartX() {

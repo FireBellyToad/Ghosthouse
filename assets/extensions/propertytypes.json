@@ -1,0 +1,15 @@
+[
+    {
+        "color": "#ff000000",
+        "drawFill": true,
+        "id": 13,
+        "members": [
+        ],
+        "name": "WALL",
+        "type": "class",
+        "useAs": [
+            "object",
+            "tile"
+        ]
+    }
+]

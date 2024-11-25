@@ -29,11 +29,6 @@ public class GhostHouse extends Game {
     }
 
     @Override
-    public void render() {
-        gameScreen.render(0f);
-    }
-
-    @Override
     public void dispose() {
         gameScreen.dispose();
         cameraManager.dispose();
