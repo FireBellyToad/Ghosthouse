@@ -50,4 +50,8 @@ public class WallArea {
 
         shape.dispose();
     }
+
+    public Body getBody() {
+        return body;
+    }
 }

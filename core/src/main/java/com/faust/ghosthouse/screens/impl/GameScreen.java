@@ -57,14 +57,15 @@ public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
         cameraManager.box2DDebugRenderer(worldManager.getWorld());
 
         worldManager.doStep(delta);
-        doLogic();
+        doLogic(delta);
 
     }
 
     /**
      * Executes the logic of each game Instance
      */
-    private void doLogic() {
+    private void doLogic(float delta) {
+        player.doLogic(delta, room.getRoomContent());
     }
 
     @Override

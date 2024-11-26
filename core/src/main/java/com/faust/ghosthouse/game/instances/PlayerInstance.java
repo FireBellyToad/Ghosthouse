@@ -31,18 +31,31 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
     @Override
     public void doLogic(float stateTime, RoomContent roomContent) {
 
+
+        // Keep the initial velocity
+        float horizontalVelocity = this.body.getLinearVelocity().x;
+        float verticalVelocity = this.body.getLinearVelocity().y;
+        if (horizontalVelocity != 0) {
+            if (horizontalVelocity < 0 && horizontalVelocity > -PLAYER_SPEED) {
+                horizontalVelocity = -PLAYER_SPEED;
+            } else if (horizontalVelocity > 0 && horizontalVelocity < PLAYER_SPEED) {
+                horizontalVelocity = PLAYER_SPEED;
+            }
+        }
+
+        setPlayerLinearVelocity(horizontalVelocity, verticalVelocity);
         // If the player has stopped moving, set idle behaviour
-        if (this.body.getLinearVelocity().x == 0 && this.body.getLinearVelocity().y == 0) {
-            changeCurrentBehavior(GameBehavior.IDLE);
-        } else {
-            changeCurrentBehavior(GameBehavior.WALK);
-        }
-        // Set horizontal direction if horizontal velocity is not zero
-        if (this.body.getLinearVelocity().x == PLAYER_SPEED) {
-            this.currentDirectionEnum = DirectionEnum.RIGHT;
-        } else if (this.body.getLinearVelocity().x == -PLAYER_SPEED) {
-            this.currentDirectionEnum = DirectionEnum.LEFT;
-        }
+//        if (this.body.getLinearVelocity().x == 0 && this.body.getLinearVelocity().y == 0) {
+//            changeCurrentBehavior(GameBehavior.IDLE);
+//        } else {
+//            changeCurrentBehavior(GameBehavior.WALK);
+//        }
+//        // Set horizontal direction if horizontal velocity is not zero
+//        if (this.body.getLinearVelocity().x == PLAYER_SPEED) {
+//            this.currentDirectionEnum = DirectionEnum.RIGHT;
+//        } else if (this.body.getLinearVelocity().x == -PLAYER_SPEED) {
+//            this.currentDirectionEnum = DirectionEnum.LEFT;
+//        }
     }
 
     @Override
@@ -147,10 +160,17 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
         // Determine new velocity
         switch (keycode) {
             case Input.Keys.A:
+            case Input.Keys.LEFT: {
+                if (horizontalVelocity == -PLAYER_SPEED) {
+                    horizontalVelocity = 0;
+                }
+                break;
+            }
             case Input.Keys.D:
-            case Input.Keys.LEFT:
             case Input.Keys.RIGHT: {
-                horizontalVelocity = 0;
+                if (horizontalVelocity == PLAYER_SPEED) {
+                    horizontalVelocity = 0;
+                }
                 break;
             }
         }
