@@ -1,4 +1,4 @@
-package com.faust.ghosthouse.game.instances;
+package com.faust.ghosthouse.game.instances.impl;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -12,7 +12,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.faust.ghosthouse.game.gameentities.enums.DirectionEnum;
 import com.faust.ghosthouse.game.gameentities.enums.GameBehavior;
 import com.faust.ghosthouse.game.gameentities.impl.PlayerEntity;
+import com.faust.ghosthouse.game.instances.AnimatedInstance;
 import com.faust.ghosthouse.game.rooms.RoomContent;
+import com.faust.ghosthouse.game.rooms.interfaces.SpawnFactory;
 import com.faust.ghosthouse.world.CollisionManager;
 import com.faust.ghosthouse.world.WorldManager;
 
@@ -22,6 +24,9 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
     private static final float FLOOR_OFFSET = 2;
     private static final float PLAYER_SPEED = 50;
     private static final float JUMP_FORCE = 10f * WorldManager.FORCE_MODIFIER;
+
+    private boolean canJump = true;
+    private SpawnFactory spawnFactory;
 
     public PlayerInstance() {
         super(new PlayerEntity());
@@ -43,7 +48,13 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
             }
         }
 
+//        canJump = verticalVelocity != 0;
+
         setPlayerLinearVelocity(horizontalVelocity, verticalVelocity);
+        spawnFactory.spawnInstance(DebugParticle.class,
+            this.body.getPosition().x,
+            this.body.getPosition().y, null);
+
         // If the player has stopped moving, set idle behaviour
 //        if (this.body.getLinearVelocity().x == 0 && this.body.getLinearVelocity().y == 0) {
 //            changeCurrentBehavior(GameBehavior.IDLE);
@@ -114,6 +125,14 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
         return stateTime;
     }
 
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
+    }
+
+    public void setSpawnFactory(SpawnFactory spawnFactory) {
+        this.spawnFactory = spawnFactory;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
 
@@ -126,22 +145,30 @@ public class PlayerInstance extends AnimatedInstance implements InputProcessor {
         float verticalVelocity = this.body.getLinearVelocity().y;
 
         switch (keycode) {
-            case Input.Keys.A:
-            case Input.Keys.LEFT: {
-                horizontalVelocity = -PLAYER_SPEED;
-                this.currentDirectionEnum = DirectionEnum.LEFT;
-
-                break;
-            }
-            case Input.Keys.D:
-            case Input.Keys.RIGHT: {
-                horizontalVelocity = +PLAYER_SPEED;
-                this.currentDirectionEnum = DirectionEnum.RIGHT;
+            case Input.Keys.X:{
+                spawnFactory.spawnInstance(ShotInstance.class,
+                    this.body.getPosition().x,
+                    this.body.getPosition().y, currentDirectionEnum);
                 break;
             }
             case Input.Keys.Z:
             case Input.Keys.J: {
-                verticalVelocity += JUMP_FORCE;
+                if(canJump){
+                    verticalVelocity = JUMP_FORCE;
+                    canJump = false;
+                }
+                break;
+            }
+            case Input.Keys.A:
+            case Input.Keys.LEFT: {
+                horizontalVelocity = -PLAYER_SPEED;
+                this.currentDirectionEnum = DirectionEnum.LEFT;
+                break;
+            }
+            case Input.Keys.D:
+            case Input.Keys.RIGHT: {
+                horizontalVelocity = PLAYER_SPEED;
+                this.currentDirectionEnum = DirectionEnum.RIGHT;
                 break;
             }
 

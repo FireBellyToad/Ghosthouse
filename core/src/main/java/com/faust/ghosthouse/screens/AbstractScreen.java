@@ -1,4 +1,4 @@
-package com.faust.lhengine.screens;
+package com.faust.ghosthouse.screens;
 
 import com.badlogic.gdx.Screen;
 import com.faust.ghosthouse.GhostHouse;

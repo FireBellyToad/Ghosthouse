@@ -6,8 +6,6 @@ import com.faust.ghosthouse.game.gameentities.TexturedEntity;
 import com.faust.ghosthouse.game.gameentities.enums.DirectionEnum;
 import com.faust.ghosthouse.game.gameentities.enums.GameBehavior;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -67,6 +65,10 @@ public abstract class AnimatedInstance extends GameInstance {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public DirectionEnum getCurrentDirectionEnum() {
+        return currentDirectionEnum;
     }
 
     /**

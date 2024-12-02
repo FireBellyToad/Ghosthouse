@@ -6,7 +6,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.faust.ghosthouse.game.instances.AnimatedInstance;
 import com.faust.ghosthouse.game.instances.GameInstance;
-import com.faust.ghosthouse.game.instances.PlayerInstance;
+import com.faust.ghosthouse.game.instances.impl.PlayerInstance;
+import com.faust.ghosthouse.game.instances.impl.ShotInstance;
 import com.faust.ghosthouse.game.rooms.areas.WallArea;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class WorldManager {
     private static final float DEFAULT_TIME_STEP = 1 / 60f;
     private static final int DEFAULT_VELOCITY_ITERATIONS = 8;
     private static final int DEFAULT_POSITION_ITERATIONS = 4;
-    public static final int  FORCE_MODIFIER = 25;
+    public static final int FORCE_MODIFIER = 250;
 
-    private static final float EARTH_GRAVITY = -10f * FORCE_MODIFIER;
+    private static final float EARTH_GRAVITY = -10f * FORCE_MODIFIER / 17.5f;
 
     private final World world;
     private float accumulator;
@@ -128,6 +129,18 @@ public class WorldManager {
         Objects.requireNonNull(wallList);
 
         wallList.forEach(w -> w.createBody(this.world));
+    }
+
+    /**
+     * Insert shot into
+     *
+     * @param shot
+     */
+
+    public void insertShotIntoWorld(ShotInstance shot, float startX, float startY) {
+        Objects.requireNonNull(shot);
+
+        shot.createBody(this.world, startX, startY);
     }
 
     public World getWorld() {

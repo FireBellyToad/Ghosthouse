@@ -73,6 +73,10 @@ public class SideViewWorldRenderer implements WorldRenderer<Room> {
         List<GameInstance> allInstance = new ArrayList<>();
 
         allInstance.add(roomContent.player);
+        allInstance.addAll(roomContent.debugInstances);
+        if(Objects.nonNull(roomContent.shot)){
+            allInstance.add(roomContent.shot);
+        }
         //TODO uncomment when enemies are available
 //        allInstance.addAll(roomContent.enemyList);
 

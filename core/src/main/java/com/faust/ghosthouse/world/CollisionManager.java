@@ -1,6 +1,10 @@
 package com.faust.ghosthouse.world;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
+import com.faust.ghosthouse.game.gameentities.enums.GameBehavior;
+import com.faust.ghosthouse.game.instances.impl.PlayerInstance;
+import com.faust.ghosthouse.game.rooms.areas.WallArea;
 
 import java.util.Objects;
 
@@ -17,10 +21,17 @@ public class CollisionManager implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
+        if (isContactOfClass(contact, PlayerInstance.class)) {
+            handlePlayerBeginContact(contact);
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
+
+        if (isContactOfClass(contact, PlayerInstance.class)) {
+            handlePlayerEndContact(contact);
+        }
     }
 
     /**
@@ -29,6 +40,18 @@ public class CollisionManager implements ContactListener {
      * @param contact
      */
     private void handlePlayerBeginContact(Contact contact) {
+
+        if (isContactOfClass(contact, WallArea.class)) {
+
+            WallArea wallArea = ((WallArea) getCorrectFixture(contact, WallArea.class).getBody().getUserData());
+            PlayerInstance playerInstance = ((PlayerInstance) getCorrectFixture(contact, PlayerInstance.class).getBody().getUserData());
+
+            if (wallArea.getBody().getPosition().y < playerInstance.getBody().getPosition().y) {
+                playerInstance.setCanJump(true);
+            }
+
+        }
+
     }
 
     /**
@@ -37,6 +60,23 @@ public class CollisionManager implements ContactListener {
      * @param contact
      */
     private void handlePlayerEndContact(Contact contact) {
+
+        if (isContactOfClass(contact, WallArea.class)) {
+
+            final WallArea wallArea = ((WallArea) getCorrectFixture(contact, WallArea.class).getBody().getUserData());
+            final PlayerInstance playerInstance = ((PlayerInstance) getCorrectFixture(contact, PlayerInstance.class).getBody().getUserData());
+
+            if (wallArea.getBody().getPosition().y < playerInstance.getBody().getPosition().y) {
+                // Coyote time for jump
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        playerInstance.setCanJump(false);
+                    }
+                }, 0.15f);
+            }
+
+        }
     }
 
 
@@ -62,7 +102,7 @@ public class CollisionManager implements ContactListener {
         Objects.requireNonNull(contact.getFixtureB().getBody().getUserData());
 
         return contact.getFixtureA().getBody().getUserData().getClass().equals(gameInstanceClass) ||
-                contact.getFixtureB().getBody().getUserData().getClass().equals(gameInstanceClass);
+            contact.getFixtureB().getBody().getUserData().getClass().equals(gameInstanceClass);
     }
 
     /**

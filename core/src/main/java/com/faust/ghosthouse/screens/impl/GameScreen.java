@@ -3,12 +3,13 @@ package com.faust.ghosthouse.screens.impl;
 import com.badlogic.gdx.Gdx;
 import com.faust.ghosthouse.GhostHouse;
 import com.faust.ghosthouse.camera.CameraManager;
-import com.faust.ghosthouse.game.instances.PlayerInstance;
+import com.faust.ghosthouse.game.instances.impl.PlayerInstance;
 import com.faust.ghosthouse.game.rooms.Room;
 import com.faust.ghosthouse.render.SideViewWorldRenderer;
+import com.faust.ghosthouse.screens.AbstractScreen;
 import com.faust.ghosthouse.world.WorldManager;
 
-public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
+public class GameScreen extends AbstractScreen {
     private final PlayerInstance player;
     private final WorldManager worldManager;
     private final Room room;
@@ -27,11 +28,6 @@ public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
         Gdx.input.setInputProcessor(player);
 
         worldRenderer = new SideViewWorldRenderer(game.getBatch(), cameraManager, room);
-    }
-
-    @Override
-    public void show() {
-
     }
 
     @Override
@@ -57,16 +53,10 @@ public class GameScreen extends com.faust.lhengine.screens.AbstractScreen {
         cameraManager.box2DDebugRenderer(worldManager.getWorld());
 
         worldManager.doStep(delta);
-        doLogic(delta);
+        room.doRoomContentsLogic(delta);
 
     }
 
-    /**
-     * Executes the logic of each game Instance
-     */
-    private void doLogic(float delta) {
-        player.doLogic(delta, room.getRoomContent());
-    }
 
     @Override
     public void dispose() {
